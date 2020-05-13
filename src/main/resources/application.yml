@@ -33,3 +33,6 @@ spring:
       enabled: true
 
 logging.config: classpath:logback-${ENV:development}.xml
+
+logstash:
+  url: http://127.0.0.1:31311
