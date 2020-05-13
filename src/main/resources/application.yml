@@ -32,7 +32,10 @@ spring:
       height: 15
       margin: 1
 
-logging.config: classpath:logback-${ENV:development}.xml
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+  config: classpath:logback-${ENV:development}.xml
 
 logstash:
   url: http://127.0.0.1:31311

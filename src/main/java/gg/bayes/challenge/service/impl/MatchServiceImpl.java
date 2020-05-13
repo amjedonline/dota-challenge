@@ -41,10 +41,12 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Long ingestMatch(final String payload) {
 
+        log.info("Received new payload for injestion");
         long matchId = ThreadLocalRandom.current().nextLong(0, 9999999999l);
 
+        log.info("Now splitting payload and injesting under new matchId {}", matchId);
         Splitter.on("\n").split(payload).forEach(event -> ingestEvent(event, matchId));
-
+        log.info("Successfully injested the events for matchId {}", matchId);
         return matchId;
     }
 
