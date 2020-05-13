@@ -41,21 +41,18 @@ public class MatchController {
     @GetMapping("{matchId}/{heroName}/items")
     public ResponseEntity<List<HeroItems>> getItems(@PathVariable("matchId") Long matchId,
                                                     @PathVariable("heroName") String heroName) {
-        // TODO use match service to retrieve stats
-        throw new NotImplementedException("should be implemented by the applicant");
+        return ResponseEntity.ok(matchService.getHeroItems(String.valueOf(matchId), heroName));
     }
 
     @GetMapping("{matchId}/{heroName}/spells")
     public ResponseEntity<List<HeroSpells>> getSpells(@PathVariable("matchId") Long matchId,
                                                       @PathVariable("heroName") String heroName) {
-        // TODO use match service to retrieve stats
-        throw new NotImplementedException("should be implemented by the applicant");
+        return ResponseEntity.ok(matchService.getHeroSpells(String.valueOf(matchId), heroName));
     }
 
     @GetMapping("{matchId}/{heroName}/damage")
     public ResponseEntity<List<HeroDamage>> getDamage(@PathVariable("matchId") Long matchId,
                                                       @PathVariable("heroName") String heroName) {
-        // TODO use match service to retrieve stats
-        throw new NotImplementedException("should be implemented by the applicant");
+        return ResponseEntity.ok(matchService.getHeroDamages(String.valueOf(matchId), heroName));
     }
 }

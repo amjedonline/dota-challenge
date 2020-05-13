@@ -1,7 +1,10 @@
 package gg.bayes.challenge.service.impl;
 
 import com.google.common.base.Splitter;
+import gg.bayes.challenge.model.HeroDamage;
+import gg.bayes.challenge.model.HeroItems;
 import gg.bayes.challenge.model.HeroKills;
+import gg.bayes.challenge.model.HeroSpells;
 import gg.bayes.challenge.model.repo.HeroRepo;
 import gg.bayes.challenge.service.MatchService;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +53,21 @@ public class MatchServiceImpl implements MatchService {
         return repository.getHeroKillsForMatch(matchId);
     }
 
+    @Override
+    public List<HeroItems> getHeroItems(String matchId, String heroName) {
+        return repository.getHeroItems(matchId, heroName);
+    }
+
+    @Override
+    public List<HeroSpells> getHeroSpells(String matchId, String heroName) {
+        return repository.getHeroSpells(matchId, heroName);
+    }
+
+    @Override
+    public List<HeroDamage> getHeroDamages(String matchId, String heroName) {
+        return repository.getHeroDamages(matchId, heroName);
+    }
+
     private void ingestEvent(String event, long matchId) {
         final HttpHeaders headers = new HttpHeaders();
         headers.set(MATCH, String.valueOf(matchId));
@@ -58,4 +76,6 @@ public class MatchServiceImpl implements MatchService {
         restTemplate
                 .exchange(logstashUrl, HttpMethod.PUT, request, Void.class);
     }
+
+
 }
