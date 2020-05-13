@@ -1,4 +1,4 @@
-package gg.bayes.challenge.rest.model;
+package gg.bayes.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package gg.bayes.challenge.service;
 
+import gg.bayes.challenge.model.repo.HeroRepo;
 import gg.bayes.challenge.service.impl.MatchServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -10,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 
 
 public class MatchServiceImplTest {
@@ -20,8 +21,8 @@ public class MatchServiceImplTest {
     @Test
     void testaIngestMatch() {
 
-        final RestTemplate restTemplate = Mockito.mock(RestTemplate.class);
-        final MatchServiceImpl matchService = new MatchServiceImpl(restTemplate, LOGSTASH_URL);
+        final RestTemplate restTemplate = mock(RestTemplate.class);
+        final MatchServiceImpl matchService = new MatchServiceImpl(mock(HeroRepo.class), restTemplate, LOGSTASH_URL);
 
         final long match_id = matchService.ingestMatch("log 1");
 
@@ -30,7 +31,7 @@ public class MatchServiceImplTest {
         final ArgumentCaptor<HttpEntity> httpEntity = ArgumentCaptor.forClass(HttpEntity.class);
         final ArgumentCaptor<Class> voidArgumentCaptor = ArgumentCaptor.forClass(Class.class);
 
-        Mockito.verify(restTemplate).exchange(urlCaptor.capture(), httpMethodCaptor.capture(), httpEntity.capture(), voidArgumentCaptor.capture());
+        verify(restTemplate).exchange(urlCaptor.capture(), httpMethodCaptor.capture(), httpEntity.capture(), voidArgumentCaptor.capture());
         assertEquals(LOGSTASH_URL, urlCaptor.getValue());
         assertEquals(HttpMethod.PUT, httpMethodCaptor.getValue());
         assertEquals("log 1", httpEntity.getValue().getBody().toString());
@@ -43,11 +44,11 @@ public class MatchServiceImplTest {
     void testIngestMatchMultilineFile() {
 
         final RestTemplate restTemplate = Mockito.mock(RestTemplate.class);
-        final MatchServiceImpl matchService = new MatchServiceImpl(restTemplate, LOGSTASH_URL);
+        final MatchServiceImpl matchService = new MatchServiceImpl(mock(HeroRepo.class), restTemplate, LOGSTASH_URL);
 
         final long match_id = matchService.ingestMatch("log 1\nlog2");
 
-        Mockito.verify(restTemplate, times(2)).exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class));
+        verify(restTemplate, times(2)).exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class));
 
     }
 }

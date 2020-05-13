@@ -1,4 +1,4 @@
-package gg.bayes.challenge.rest.model;
+package gg.bayes.challenge.model;
 
 import lombok.Data;
 

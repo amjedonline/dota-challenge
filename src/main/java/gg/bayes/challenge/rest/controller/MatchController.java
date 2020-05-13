@@ -1,9 +1,9 @@
 package gg.bayes.challenge.rest.controller;
 
-import gg.bayes.challenge.rest.model.HeroDamage;
-import gg.bayes.challenge.rest.model.HeroItems;
-import gg.bayes.challenge.rest.model.HeroKills;
-import gg.bayes.challenge.rest.model.HeroSpells;
+import gg.bayes.challenge.model.HeroDamage;
+import gg.bayes.challenge.model.HeroItems;
+import gg.bayes.challenge.model.HeroKills;
+import gg.bayes.challenge.model.HeroSpells;
 import gg.bayes.challenge.service.MatchService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.NotImplementedException;
@@ -35,8 +35,7 @@ public class MatchController {
 
     @GetMapping("{matchId}")
     public ResponseEntity<List<HeroKills>> getMatch(@PathVariable("matchId") Long matchId) {
-        // TODO use match service to retrieve stats
-        throw new NotImplementedException("should be implemented by the applicant");
+        return ResponseEntity.ok(matchService.getHeroKills(String.valueOf(matchId)));
     }
 
     @GetMapping("{matchId}/{heroName}/items")

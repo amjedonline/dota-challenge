@@ -1,6 +1,8 @@
 package gg.bayes.challenge.service.impl;
 
 import com.google.common.base.Splitter;
+import gg.bayes.challenge.model.HeroKills;
+import gg.bayes.challenge.model.repo.HeroRepo;
 import gg.bayes.challenge.service.MatchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
@@ -19,24 +22,32 @@ public class MatchServiceImpl implements MatchService {
 
     public static final String MATCH = "match";
 
+    private HeroRepo repository;
+
     private RestTemplate restTemplate;
 
     private String logstashUrl;
 
     @Autowired
-    public MatchServiceImpl(final RestTemplate restTemplate, @Value("${logstash.url}") String logstashUrl) {
+    public MatchServiceImpl(final HeroRepo repository, final RestTemplate restTemplate, @Value("${logstash.url}") String logstashUrl) {
+        this.repository = repository;
         this.logstashUrl = logstashUrl;
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public Long ingestMatch(String payload) {
+    public Long ingestMatch(final String payload) {
 
         long matchId = ThreadLocalRandom.current().nextLong(0, 9999999999l);
 
         Splitter.on("\n").split(payload).forEach(event -> ingestEvent(event, matchId));
 
         return matchId;
+    }
+
+    @Override
+    public List<HeroKills> getHeroKills(final String matchId) {
+        return repository.getHeroKillsForMatch(matchId);
     }
 
     private void ingestEvent(String event, long matchId) {
