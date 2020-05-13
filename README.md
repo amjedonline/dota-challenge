@@ -48,3 +48,11 @@ __Spring Boot Application__
 3. Converting timespan to millis.
 4. Debugging - For some reason couldn't Read/Write to a database name „dota“, hence resorted to using „postgres“.
 5. Getting Lombok Annotation processing working on IDE - IntelliJ needed an explicit Restart, a Quit/Start the IDE didn’t do.
+
+
+### Scope of Improvement
+1. Use Long column type for match_id and Long type in Java
+2. Reconsider other column types.
+3. More Unit and Intergation tests.
+4. Refactor/Reuse parts of Logstash configuration.
+ 
